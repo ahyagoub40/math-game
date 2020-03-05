@@ -10,28 +10,11 @@ class Game
     @player2 = Player.new(p2)
     @turn = @player1
   end
-  def message
+  def messages
     if go?
       puts'---- New Turn ----'
     else
       puts '---- Game Over ----\nGood bye!'
-    end
-  end
-  def run
-    while go?
-      question = Question.new
-      puts "#{@turn.name}: #{question.question}"
-      user_input = gets.chomp.to_i
-      if user_input != question.answer
-        @turn.lose_life 
-        response = "wrong answer"
-      else
-        response = "correct"
-      end
-      puts "#{@turn.name}: #{response}"
-      puts @turn.score
-      message
-      switch_turn?
     end
   end
   def go?
@@ -39,6 +22,26 @@ class Game
   end
   def switch_turn?
     @turn = (@turn == @player1) ? @player2 : @player1
+  end
+  def correct_answer?(user_answer)
+    if user_answer == @question.answer
+      @response = "correct"
+    else
+      @turn.lose_life 
+      @response = "wrong answer"
+    end
+  end
+  def run
+    while go?
+      @question = Question.new
+      puts "#{@turn.name}: #{@question.question}"
+      user_input = gets.chomp.to_i
+      correct_answer?(user_input)
+      puts "#{@turn.name}: #{@response}"
+      puts @turn.score
+      message
+      switch_turn?
+    end
   end
 end
 
