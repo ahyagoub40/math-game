@@ -19,10 +19,12 @@ class Game
   end
   def run
     while go?
-      puts "#{@turn.name}: #{@question}"
-      user_input = gets.chomp
-      puts "#{@turn.name}: #{@answer}"
-      @turn.lose_life if user_input != @answer 
+      question = Question.new
+      puts "#{@turn.name}: #{question.question}"
+      user_input = gets.chomp.to_i
+      puts user_input
+      puts "#{@turn.name}: #{question.answer}"
+      @turn.lose_life if user_input != question.answer 
       puts @turn.score
       message
       switch_turn?
