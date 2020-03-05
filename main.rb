@@ -22,9 +22,13 @@ class Game
       question = Question.new
       puts "#{@turn.name}: #{question.question}"
       user_input = gets.chomp.to_i
-      puts user_input
-      puts "#{@turn.name}: #{question.answer}"
-      @turn.lose_life if user_input != question.answer 
+      if user_input != question.answer
+        @turn.lose_life 
+        response = "wrong answer"
+      else
+        response = "correct"
+      end
+      puts "#{@turn.name}: #{response}"
       puts @turn.score
       message
       switch_turn?
