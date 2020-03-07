@@ -1,3 +1,5 @@
+require './player'
+
 class Question
   attr_accessor :question, :answer
   def initialize
